@@ -1,6 +1,7 @@
 from typing import Dict
 
 import aiohttp
+import json
 from aiohttp.client_exceptions import ServerDisconnectedError, ClientConnectionError, ContentTypeError
 
 
@@ -32,7 +33,8 @@ async def search_school(code: str, level: str, org: str):
                 async with session.get(
                     url=f"https://hcs.eduro.go.kr/v2/searchSchool?lctnScCode={code}&schulCrseScCode={level}&orgName={org}&loginType=school"
                 ) as resp:
-                    return await resp.json(content_type=None)
+                    data = await resp.read()
+                    return json.loads(data, encoding="utf-8")
         except ServerDisconnectedError as e:
             if attempt >= 4:
                 raise e
