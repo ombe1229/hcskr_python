@@ -41,7 +41,3 @@ async def search_school(code: str, level: str, org: str):
             if attempt >= 4:
                 raise e
             continue
-        except ContentTypeError as e:
-            if attempt >= 4:
-                raise e
-            continue
