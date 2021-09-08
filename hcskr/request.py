@@ -30,10 +30,9 @@ async def search_school(code: str, level: str, org: str):
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(
-                    url=f"https://hcs.eduro.go.kr/v2/searchSchool?lctnScCode={code}&schulCrseScCode={level}&orgName={org}&loginType=school",
-                    headers = { "content-type": "application/json" }
+                    url=f"https://hcs.eduro.go.kr/v2/searchSchool?lctnScCode={code}&schulCrseScCode={level}&orgName={org}&loginType=school"
                 ) as resp:
-                    return await resp.json()
+                    return await resp.json(content_type=None)
         except ServerDisconnectedError as e:
             if attempt >= 4:
                 raise e
